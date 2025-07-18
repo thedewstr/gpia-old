@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Blog Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+      color: #eee;
+      background: #121212;
+    }
+
+    .sidebar {
+      background: #1f1f1f;
+      width: 250px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .dark-toggle {
+      background: none;
+      color: #bbb;
+      border: 1px solid #444;
+      padding: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+    }
+
+    input, textarea {
+      background: #2b2b2b;
+      border: 1px solid #444;
+      color: #eee;
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    .preview {
+      flex: 1;
+      padding: 2rem;
+      background: #1a1a1a;
+      margin-left: 2rem;
+      border-radius: 10px;
+      overflow-y: auto;
+      max-height: 100%;
+    }
+
+    .dashboard {
+      display: flex;
+      gap: 2rem;
+      height: 100%;
+    }
+
+    .preview img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Admin</h2>
+    <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  </div>
+
+  <div class="main">
+    <h1>Create New Blog Post</h1>
+    <div class="dashboard">
+      <form id="blogForm">
+        <input type="text" name="title" placeholder="Title" required oninput="updatePreview()">
+        <textarea name="content" rows="6" placeholder="Content..." required oninput="updatePreview()"></textarea>
+        <input type="date" name="date" required oninput="updatePreview()">
+        <input type="file" accept="image/*" onchange="handleFileUpload(event)">
+        <input type="hidden" name="image">
+        <input type="password" name="secret" placeholder="Admin Secret" required>
+        <button type="submit">Post</button>
+      </form>
+
+      <div class="preview">
+        <h2 id="previewTitle">(Title Preview)</h2>
+        <p id="previewDate">(Date Preview)</p>
+        <p id="previewContent">(Content Preview)</p>
+        <img id="previewImage" src="" style="display:none;">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('light');
+      localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    }
+
+    function updatePreview() {
+      const form = document.forms.blogForm;
+      document.getElementById('previewTitle').textContent = form.title.value || '(Title Preview)';
+      document.getElementById('previewDate').textContent = form.date.value || '(Date Preview)';
+      document.getElementById('previewContent').textContent = form.content.value || '(Content Preview)';
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.forms.blogForm.image.value = evt.target.result;
+        const img = document.getElementById('previewImage');
+        img.src = evt.target.result;
+        img.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+document.getElementById('blogForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form));
+
+  const res = await fetch('https://blog-post-api.ryantheshibainu.workers.dev', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    alert("✅ Blog post submitted!");
+    form.reset();
+    document.getElementById('previewImage').style.display = 'none';
+    updatePreview();
+  } else {
+    alert("❌ Error: " + await res.text());
+  }
+});
+
+    // Apply saved theme on load
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+    }
+  </script>
+</body>
+</html>

@@ -1,17 +1,20 @@
 console.log("Let's-a-go!");
 
-// Shrink header on scroll
 window.addEventListener('scroll', () => {
   const hero = document.querySelector('header.hero');
-  if(window.scrollY > 50){
+  const spacer = document.querySelector('.hero-spacer');
+
+  if (window.scrollY > 50) {
     hero.classList.add('scrolled');
+    spacer.style.height = '100px';
   } else {
     hero.classList.remove('scrolled');
+    spacer.style.height = '300px';
   }
 });
 
 // Testimonials carousel
-window.addEventListener('load', function(){
+window.addEventListener('load', function () {
   new Glider(document.querySelector('.glider'), {
     slidesToShow: 1,
     dots: '.dots',

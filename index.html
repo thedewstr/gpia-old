@@ -14,9 +14,14 @@
 
 <header class="hero">
   <h1>Gotta Ping 'Em All</h1>
-  <p>Pokemon • Labubus • Magic • Amazon Deals & more</p>
-  <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank" class="btn">Join Our Premium Server</a>
+  <p>Pokemon • Labubus • Magic • Amazon Deals • and More!</p>
+  <div class="btn-group">
+    <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank" class="btn paid">Join Our Premium Server</a>
+    <a href="https://discord.gg/SrTKWrGWmr" target="_blank" class="btn free">Join Our Free Server</a>
+  </div>
 </header>
+<div class="hero-spacer"></div>
+
 
 <section class="features" data-aos="fade-up">
   <h2>What We Monitor</h2>
@@ -105,6 +110,27 @@
     </div>
   </div>
 </section>
+
+<section id="blog-feed" data-aos="fade-up">
+  <h2>Updates</h2>
+  <div id="blogPreviewContainer" class="blog-preview-cards"></div>
+</section>
+<script>
+  const previewPosts = JSON.parse(localStorage.getItem('posts') || '[]').slice(0, 3);
+  const blogPreview = document.getElementById('blogPreviewContainer');
+  previewPosts.forEach(post => {
+    const div = document.createElement('div');
+    div.className = 'post';
+    div.innerHTML = `
+      <h3>${post.title}</h3>
+      <time>${post.date}</time>
+      ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
+      <p>${post.content.substring(0, 100)}...</p>
+      <a href="blog.html" class="btn">Read more</a>
+    `;
+    blogPreview.appendChild(div);
+  });
+</script>
 
 <footer>
   <p>with 💜 from mtndew</p>
