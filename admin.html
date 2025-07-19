@@ -164,11 +164,6 @@
       }
     }
 
-    function toggleDarkMode() {
-      document.body.classList.toggle('light');
-      localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-    }
-
     function logout() {
       localStorage.removeItem('authToken');
       location.reload();

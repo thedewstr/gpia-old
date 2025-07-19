@@ -391,3 +391,32 @@ footer {
 body.hero-shrunk {
   padding-top: 80px;
 }
+
+.post h3.collapsible:hover {
+  color: #66d9ef;
+  text-decoration: underline;
+}
+
+.post {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.discord-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.discord-post {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.discord-post p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

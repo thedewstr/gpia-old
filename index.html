@@ -22,7 +22,6 @@
 </header>
 <div class="hero-spacer"></div>
 
-
 <section class="features" data-aos="fade-up">
   <h2>What We Monitor</h2>
   <div class="cards">
@@ -35,7 +34,7 @@
       <p>Increase your odds of catching POPMART drops.</p>
     </div>
     <div class="card">
-      <h3>Food On The Cheap</h3>
+      <h3>UberEats, DoorDash, and Instacart Deals</h3>
       <p>Who doesn't like free food?</p>
     </div>
     <div class="card">
@@ -64,30 +63,22 @@
           <div class="testimonial">
             <div class="stars">★★★★★</div>
             <blockquote>“I came for the monitoring and stayed for the community.”</blockquote>
-            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank" rel="noopener">
-              <img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge">
-            </a>
+            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank"><img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge"></a>
           </div>
           <div class="testimonial">
             <div class="stars">★★★★★</div>
             <blockquote>“I am so thankful for this community. It's been one of the only ways I've been able to get any TCG cards at all for my son. Sora does an excellent job of providing helpful insights, leads and a welcoming community that is friendly and fun to be a part of.”</blockquote>
-            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank" rel="noopener">
-              <img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge">
-            </a>
+            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank"><img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge"></a>
           </div>
-          <div class="testimonial">
+           <div class="testimonial">
             <div class="stars">★★★★★</div>
-            <blockquote>“The monitor is very streamlined to cater to the products you want and not spam you with products you don’t want. Also the community is amazing and fun to chat with and Sora genuinely wants people to get their Pokemon products at msrp!”</blockquote>
-            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank" rel="noopener">
-              <img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge">
-            </a>
+            <blockquote>“The monitor is quick and effective. It's a wonderful community that is open and friendly to every member I have encountered. Service excellent, friendliness is excellent, genuinely happy I have found this group regardless of the pokemon hobby.”</blockquote>
+            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank"><img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge"></a>
           </div>
-          <div class="testimonial">
+                     <div class="testimonial">
             <div class="stars">★★★★★</div>
-            <blockquote>“Great community and have found this to be the most successful as a TCG player and collector. The people in the group are also really cool!”</blockquote>
-            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank" rel="noopener">
-              <img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge">
-            </a>
+            <blockquote>“This is my first pokemon TCG group and it has been very welcoming and fair. Plus the community is really chill and it's fun to learn about Pokemon news and goof around with everyone. Recommended 100% for people tired of scalpers and poke bros and bots.”</blockquote>
+            <a href="https://whop.com/pkmntcgdeals/?d2c=true&directPlanId=plan_4dLyo4u6ceFCs&pass=prod_OYaynNwQDx0V7&a=thedewstr" target="_blank"><img src="images/whop-verified.png" alt="Verified by Whop" class="whop-badge"></a>
           </div>
         </div>
         <div class="dots"></div>
@@ -96,17 +87,7 @@
 
     <div class="proof gallery">
       <h2>Monitor Successes</h2>
-      <div class="glider-contain">
-        <div class="glider gallery-glider">
-          <img src="images/monitor/image1.png" alt="Success 1">
-          <img src="images/monitor/image2.png" alt="Success 2">
-          <img src="images/monitor/image3.png" alt="Success 3">
-          <img src="images/monitor/image4.png" alt="Success 4">
-          <img src="images/monitor/image5.png" alt="Success 5">
-          <img src="images/monitor/image6.png" alt="Success 6">
-        </div>
-        <div class="gallery-dots"></div>
-      </div>
+      <div id="discordGallery" class="gallery-glider"></div>
     </div>
   </div>
 </section>
@@ -115,22 +96,6 @@
   <h2>Updates</h2>
   <div id="blogPreviewContainer" class="blog-preview-cards"></div>
 </section>
-<script>
-  const previewPosts = JSON.parse(localStorage.getItem('posts') || '[]').slice(0, 3);
-  const blogPreview = document.getElementById('blogPreviewContainer');
-  previewPosts.forEach(post => {
-    const div = document.createElement('div');
-    div.className = 'post';
-    div.innerHTML = `
-      <h3>${post.title}</h3>
-      <time>${post.date}</time>
-      ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
-      <p>${post.content.substring(0, 100)}...</p>
-      <a href="blog.html" class="btn">Read more</a>
-    `;
-    blogPreview.appendChild(div);
-  });
-</script>
 
 <footer>
   <p>with 💜 from mtndew</p>
@@ -141,16 +106,57 @@
   <img src="" alt="enlarged view" id="lightbox-img">
 </div>
 
+<script>
+fetch("https://blog-post-api.ryantheshibainu.workers.dev/feed")
+  .then(res => res.json())
+  .then(images => {
+    const container = document.getElementById("discordGallery");
+    const latestImages = images.slice(0, 30);
+    latestImages.forEach(entry => {
+      const post = document.createElement("div");
+      post.className = "discord-post";
+      post.innerHTML = `
+        <img src="${entry.url}" alt="Success image" style="max-width:100%; border-radius:8px; margin:0.5rem 0;">
+        ${entry.caption ? `<p>${entry.caption}</p>` : ""}
+      `;
+      container.appendChild(post);
+    });
+  });
+
+async function loadRecentBlogPosts() {
+  const res = await fetch('https://blog-post-api.ryantheshibainu.workers.dev/posts');
+  const posts = await res.json();
+  const previewPosts = posts.slice(0, 3);
+  const blogPreview = document.getElementById('blogPreviewContainer');
+  blogPreview.innerHTML = '';
+  previewPosts.forEach((post, i) => {
+    const div = document.createElement('div');
+    div.className = 'post';
+    div.innerHTML = `
+      <h3 class="collapsible" style="cursor:pointer;" onclick="togglePost(${i})">${post.title}</h3>
+      <div id="postContent${i}" class="collapsed" style="display:none; margin-top: 1rem;">
+        <time>${new Date(post.date).toLocaleDateString()}</time>
+        ${post.image ? `<img src="${post.image}" alt="Post image" style="max-width:100%; border-radius:6px; margin:1rem 0;">` : ''}
+        <p>${post.content}</p>
+        <button onclick="togglePost(${i})" style="margin-top:1rem;">Close</button>
+      </div>
+    `;
+    blogPreview.appendChild(div);
+  });
+}
+function togglePost(index) {
+  const el = document.getElementById(`postContent${index}`);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+loadRecentBlogPosts();
+</script>
+
 <script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
 <script>
   window.addEventListener('load', function() {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      mirror: true
-    });
+    AOS.init({ duration: 1000, once: true, mirror: true });
   });
 </script>
 </body>
