@@ -32,6 +32,12 @@
       overflow-y: auto;
     }
 
+    .dashboard {
+      display: flex;
+      gap: 2rem;
+      height: 100%;
+    }
+
     .dark-toggle {
       background: none;
       color: #bbb;
@@ -66,26 +72,40 @@
       max-height: 100%;
     }
 
-    .dashboard {
-      display: flex;
-      gap: 2rem;
-      height: 100%;
-    }
-
     .preview img {
       max-width: 100%;
       border-radius: 6px;
       margin-top: 1rem;
     }
+
+    #loginPanel {
+      padding: 2rem;
+      margin: auto;
+      text-align: center;
+    }
+
+    #loginPanel input {
+      margin: 1rem 0;
+      padding: 0.5rem;
+      width: 200px;
+    }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Admin</h2>
-    <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <div id="loginPanel">
+    <h2>Admin Login</h2>
+    <input type="password" id="tokenInput" placeholder="Enter admin token">
+    <br>
+    <button onclick="login()">Login</button>
   </div>
 
-  <div class="main">
+  <div class="sidebar" id="sidebar" style="display:none;">
+    <h2>Admin</h2>
+    <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <button class="dark-toggle" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="main" id="mainContent" style="display:none;">
     <h1>Create New Blog Post</h1>
     <div class="dashboard">
       <form id="blogForm">
@@ -94,7 +114,6 @@
         <input type="date" name="date" required oninput="updatePreview()">
         <input type="file" accept="image/*" onchange="handleFileUpload(event)">
         <input type="hidden" name="image">
-        <input type="password" name="secret" placeholder="Admin Secret" required>
         <button type="submit">Post</button>
       </form>
 
@@ -108,9 +127,51 @@
   </div>
 
   <script>
+    function login() {
+      const token = document.getElementById('tokenInput').value;
+      localStorage.setItem('authToken', token);
+      checkLogin();
+    }
+
+    async function checkLogin() {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.log("No token found");
+        return;
+      }
+
+      console.log("Token found:", token);
+
+      try {
+        const res = await fetch('https://blog-api.ryantheshibainu.workers.dev/admin', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        console.log("Response status:", res.status);
+
+        if (res.ok) {
+          document.getElementById('loginPanel').style.display = 'none';
+          document.getElementById('sidebar').style.display = 'flex';
+          document.getElementById('mainContent').style.display = 'block';
+        } else {
+          localStorage.removeItem('authToken');
+        }
+      } catch (err) {
+        console.error("Login check failed:", err);
+      }
+    }
+
     function toggleDarkMode() {
       document.body.classList.toggle('light');
       localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    }
+
+    function logout() {
+      localStorage.removeItem('authToken');
+      location.reload();
     }
 
     function updatePreview() {
@@ -134,31 +195,33 @@
       reader.readAsDataURL(file);
     }
 
-document.getElementById('blogForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const data = Object.fromEntries(new FormData(form));
+    document.getElementById('blogForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form));
+      const token = localStorage.getItem('authToken');
 
-  const res = await fetch('https://blog-post-api.ryantheshibainu.workers.dev', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
+      const res = await fetch('https://blog-post-api.ryantheshibainu.workers.dev', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+      });
 
-  if (res.ok) {
-    alert("✅ Blog post submitted!");
-    form.reset();
-    document.getElementById('previewImage').style.display = 'none';
-    updatePreview();
-  } else {
-    alert("❌ Error: " + await res.text());
-  }
-});
+      const msg = await res.text();
+      alert(msg);
+    });
 
-    // Apply saved theme on load
     if (localStorage.getItem('theme') === 'light') {
       document.body.classList.add('light');
     }
+
+    checkLogin();
+
+    // 🔥 Expose login to global scope for button onclick
+    window.login = login;
   </script>
 </body>
 </html>
