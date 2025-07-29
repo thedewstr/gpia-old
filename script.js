@@ -56,3 +56,12 @@ lightbox.addEventListener('click', (e) => {
     lightbox.style.display = 'none';
   }
 });
+
+new Glider(document.querySelector('.gallery .glider'), {
+  slidesToShow: 1,
+  dots: '.gallery .dots',
+  draggable: true,
+  scrollLock: true,
+  rewind: true,
+  duration: 0.5
+});
